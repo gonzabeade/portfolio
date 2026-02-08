@@ -274,13 +274,11 @@ export default function Home() {
             <Briefcase className="w-8 h-8" />
             <h2>Professional Experience</h2>
           </div>
-          <div className="space-y-8 relative">
-            {/* Meta Career Path Connection */}
-            <div className="absolute left-8 top-24 bottom-[calc(100%-32rem)] w-0.5 bg-gradient-to-b from-blue-500 to-blue-600 hidden md:block"></div>
+          <div className="space-y-12 relative">
             
             {/* Meta - Business Engineer */}
             <div className="timeline-item relative">
-              <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-600">
+              <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-600 relative overflow-visible">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex items-start gap-4">
                     <img src="/meta-logo.png" alt="Meta" className="w-12 h-12 mt-1 object-contain" />
@@ -311,12 +309,20 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
-              {/* Conversion Badge */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-10 hidden md:flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                <ArrowRight className="w-4 h-4" />
-                <span>Intern → FTE</span>
-                <Plane className="w-4 h-4" />
-                <span>ARG → UK</span>
+            </div>
+
+            {/* Career Progression Connector */}
+            <div className="flex items-center justify-center -my-6 relative z-20">
+              <div className="flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-lg">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Intern → FTE</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+                <div className="w-px h-6 bg-white/30"></div>
+                <div className="flex items-center gap-2">
+                  <Plane className="w-4 h-4" />
+                  <span className="font-semibold">ARG → UK</span>
+                </div>
               </div>
             </div>
 
