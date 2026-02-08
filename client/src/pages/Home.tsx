@@ -274,11 +274,11 @@ export default function Home() {
             <Briefcase className="w-8 h-8" />
             <h2>Professional Experience</h2>
           </div>
-          <div className="space-y-12 relative">
+          <div className="space-y-8 relative">
             
             {/* Meta - Business Engineer */}
             <div className="timeline-item relative">
-              <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-600 relative overflow-visible">
+              <div className="elevated-card p-8 rounded-2xl">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex items-start gap-4">
                     <img src="/meta-logo.png" alt="Meta" className="w-12 h-12 mt-1 object-contain" />
@@ -311,24 +311,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Career Progression Connector */}
-            <div className="flex items-center justify-center -my-6 relative z-20">
-              <div className="flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-lg">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold">Intern → FTE</span>
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-                <div className="w-px h-6 bg-white/30"></div>
-                <div className="flex items-center gap-2">
-                  <Plane className="w-4 h-4" />
-                  <span className="font-semibold">ARG → UK</span>
-                </div>
-              </div>
-            </div>
-
             {/* Meta - Solutions Architect Intern */}
             <div className="timeline-item relative">
-              <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-500">
+              <div className="elevated-card p-8 rounded-2xl">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex items-start gap-4">
                     <img src="/meta-logo.png" alt="Meta" className="w-12 h-12 mt-1 object-contain" />
