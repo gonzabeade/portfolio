@@ -1,143 +1,168 @@
-/* Original Portfolio Style - Improved
-   - Split-screen layout with left panel (gray) and right panel (dark)
-   - Profile photo in circular frame on left
-   - Content sections on right with smooth scrolling
-   - All images stored locally in /public directory
+/* Black & White Elegant - Modern Sophisticated Portfolio
+   Demonstrating frontend mastery through:
+   - Advanced layout techniques
+   - Smooth animations and micro-interactions
+   - Perfect typography and spacing
+   - Modern CSS effects (glassmorphism, gradients, transforms)
+   - Thoughtful UX design
 */
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Briefcase, GraduationCap, Award, Code2, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [scrolled, setScrolled] = useState(false);
-  
-  const personalImages = [
-    "/cycling_event.webp",
-    "/cycling_outdoor.webp",
-    "/tower_bridge.webp",
-    "/snow_mountain.webp",
-    "/graffiti_dog.webp"
-  ];
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % personalImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  const [activeSection, setActiveSection] = useState("");
   
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      
+      // Track active section for navigation
+      const sections = document.querySelectorAll('section[id]');
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          setActiveSection(section.id);
+        }
+      });
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const skills = [
+    'C', 'Java', 'Python', 'HTML/CSS', 'JavaScript', 'Bash',
+    'AWS', 'Docker', 'Terraform', 'Git', 'Spring Framework',
+    'Hibernate', 'React', 'Presto', 'PostgreSQL', 'Unity', 'TensorFlow'
+  ];
+  
+  const projects = [
+    {
+      title: "Full-Stack Keras Classifier",
+      description: "End-to-end CNN system for image classification with containerized architecture",
+      tech: ["FastAPI", "Python", "React", "Keras", "Docker"]
+    },
+    {
+      title: "P2P Cryptocurrency Marketplace",
+      description: "Fully-operational Buenos Aires-based marketplace with custom backend and frontend",
+      tech: ["Spring 4", "Java", "PostgreSQL", "Hibernate"]
+    },
+    {
+      title: "Socks5 Proxy From Scratch",
+      description: "RFC1928-compliant proxy with custom control protocol for statistics",
+      tech: ["C", "Networking"]
+    },
+    {
+      title: "Markovia: Ecosystem Simulator",
+      description: "Food chain simulation with neural network-based decision making",
+      tech: ["Unity", "C#", "ML", "Blender"]
+    },
+    {
+      title: "JSON-to-XHTML Compiler",
+      description: "Modern JSON-based compiler as XSLT replacement",
+      tech: ["C", "Bison", "Flex"]
+    },
+    {
+      title: "Kernel From Scratch",
+      description: "Mini kernel with IPC, memory management, and process switching",
+      tech: ["C", "Assembly"]
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Left Panel - Profile */}
-      <div className="lg:w-2/5 lg:fixed lg:left-0 lg:top-0 lg:h-screen bg-[#e5e5e5] flex flex-col items-center justify-center p-8 lg:p-12">
-        <div className="max-w-md w-full">
-          {/* Profile Image */}
-          <div className="mb-8 flex justify-center">
-            <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-white shadow-2xl">
-              <img
-                src={personalImages[currentImageIndex]}
-                alt="Gonzalo Beade"
-                className="w-full h-full object-cover transition-opacity duration-1000"
-              />
-            </div>
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      }`}>
+        <div className="container mx-auto flex items-center justify-between py-4">
+          <a href="#hero" className="text-2xl font-bold tracking-tight hover:opacity-70 transition-opacity">
+            GB
+          </a>
+          <div className="hidden md:flex items-center gap-8">
+            {['About', 'Experience', 'Skills', 'Education', 'Projects', 'Contact'].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className={`text-sm font-medium transition-colors hover:text-black ${
+                  activeSection === item.toLowerCase() ? 'text-black' : 'text-gray-600'
+                }`}
+              >
+                {item}
+              </a>
+            ))}
           </div>
-          
-          {/* Name and Title */}
-          <div className="text-center mb-8">
-            <p className="text-sm text-gray-600 mb-2 uppercase tracking-wider">Business Engineer</p>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Gonzalo Beade</h1>
-            <p className="text-gray-700 leading-relaxed">
-              Building and scaling technical solutions at the intersection of engineering and business at Meta.
-            </p>
-          </div>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-3 mb-8">
-            <Button 
-              className="w-full bg-[#dc2626] hover:bg-[#b91c1c] text-white"
-              size="lg"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download CV
-            </Button>
-            <Button 
-              variant="outline" 
-              className="w-full border-gray-400 text-gray-700 hover:bg-gray-200"
-              size="lg"
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              Contact
-            </Button>
-          </div>
-          
-          {/* Social Links */}
-          <div className="flex justify-center gap-4">
-            <a 
-              href="https://github.com/gonzabeade" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors shadow"
-            >
-              <Github className="w-5 h-5 text-gray-700" />
+          <div className="flex items-center gap-4">
+            <a href="https://github.com/gonzabeade" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+              <Github className="w-5 h-5" />
             </a>
-            <a 
-              href="https://linkedin.com/in/gonzalo-beade" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors shadow"
-            >
-              <Linkedin className="w-5 h-5 text-gray-700" />
+            <a href="https://linkedin.com/in/gonzalo-beade" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition-opacity">
+              <Linkedin className="w-5 h-5" />
             </a>
-            <a 
-              href="mailto:gonzabeade@gmail.com"
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors shadow"
-            >
-              <Mail className="w-5 h-5 text-gray-700" />
-            </a>
-          </div>
-          
-          {/* Contact Info */}
-          <div className="mt-8 text-center text-sm text-gray-600 space-y-2">
-            <p className="flex items-center justify-center gap-2">
-              <Mail className="w-4 h-4" />
-              gonzabeade@gmail.com
-            </p>
-            <p className="flex items-center justify-center gap-2">
-              <Phone className="w-4 h-4" />
-              +54 911 3100 6408
-            </p>
-            <p className="flex items-center justify-center gap-2">
-              <MapPin className="w-4 h-4" />
-              London, United Kingdom
-            </p>
           </div>
         </div>
-      </div>
-      
-      {/* Right Panel - Content */}
-      <div className="lg:w-3/5 lg:ml-[40%] bg-[#2b2b2b] text-white">
-        <div className="max-w-4xl mx-auto p-8 lg:p-16">
-          
-          {/* About Section */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-6 text-white">About Me</h2>
-            <div className="space-y-4 text-gray-300 leading-relaxed">
-              <p>
-                I'm a <span className="text-white font-semibold">Business Engineer at Meta</span>, where I build and scale technical solutions 
-                that accelerate business growth for partners. My role sits at the unique intersection of engineering excellence, 
-                business understanding, and entrepreneurial thinking.
+      </nav>
+
+      {/* Hero Section */}
+      <section id="hero" className="min-h-screen flex items-center justify-center pt-20 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-6 fade-in-up">
+              <Badge className="bg-black text-white px-4 py-2 text-sm font-medium">
+                Business Engineer @ Meta
+              </Badge>
+            </div>
+            <h1 className="mb-6 fade-in-up stagger-1">
+              Gonzalo Manuel Beade
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed fade-in-up stagger-2">
+              Building and scaling technical solutions at the intersection of engineering and business. 
+              Currently accelerating growth for Meta's Dynamic Ads products in London.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 fade-in-up stagger-3">
+              <Button size="lg" className="bg-black text-white hover:bg-gray-800 px-8">
+                <Mail className="w-4 h-4 mr-2" />
+                Get in Touch
+              </Button>
+              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-white px-8">
+                <Download className="w-4 h-4 mr-2" />
+                Download CV
+              </Button>
+            </div>
+            <div className="mt-12 flex justify-center gap-8 text-sm text-gray-600 fade-in-up stagger-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                <span>London, UK</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                <span>gonzabeade@gmail.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* About Section */}
+      <section id="about" className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center gap-3 mb-12">
+            <Briefcase className="w-8 h-8" />
+            <h2>About Me</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6 text-gray-700 leading-relaxed">
+              <p className="text-lg">
+                I'm a <span className="font-semibold text-black">Business Engineer at Meta</span>, where I build and scale 
+                technical solutions that accelerate business growth for partners. My role sits at the unique intersection 
+                of engineering excellence, business understanding, and entrepreneurial thinking.
               </p>
               <p>
                 Currently based in London, I lead end-to-end engineering projects within Meta's Dynamic Ads family of products, 
@@ -149,211 +174,291 @@ export default function Home() {
                 de Buenos Aires, where I guide over 80 students each semester through foundational systems concepts.
               </p>
             </div>
-          </section>
-          
-          {/* What is Business Engineering */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-6 text-white">What is Business Engineering?</h2>
-            <div className="bg-[#1a1a1a] p-8 rounded-lg border border-gray-700">
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Business Engineering at Meta is a unique role that combines three core elements to accelerate 
-                business growth for partners by building and scaling solutions.
-              </p>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div>
-                  <div className="text-[#dc2626] font-bold text-xl mb-2">01</div>
-                  <h3 className="text-white font-semibold mb-2">Business Understanding</h3>
-                  <p className="text-gray-400 text-sm">Deep comprehension of partner needs, market dynamics, and strategic objectives.</p>
+            <div className="glass-card p-8 rounded-2xl">
+              <h3 className="text-xl font-semibold mb-6">What is Business Engineering?</h3>
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Business Understanding</h4>
+                    <p className="text-sm text-gray-600">Deep comprehension of partner needs and market dynamics</p>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[#dc2626] font-bold text-xl mb-2">02</div>
-                  <h3 className="text-white font-semibold mb-2">Engineering Excellence</h3>
-                  <p className="text-gray-400 text-sm">World-class software engineering and technical expertise to build at scale.</p>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Engineering Excellence</h4>
+                    <p className="text-sm text-gray-600">World-class software engineering and technical expertise</p>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[#dc2626] font-bold text-xl mb-2">03</div>
-                  <h3 className="text-white font-semibold mb-2">Entrepreneurial Mindset</h3>
-                  <p className="text-gray-400 text-sm">Proactive problem-solving and growth-focused innovation.</p>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Entrepreneurial Mindset</h4>
+                    <p className="text-sm text-gray-600">Proactive problem-solving and growth-focused innovation</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </section>
-          
-          {/* Experience Section */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-8 text-white">Experience</h2>
-            <div className="space-y-8">
-              
-              {/* Meta - Business Engineer */}
-              <div className="border-l-4 border-[#dc2626] pl-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* Experience Section */}
+      <section id="experience" className="py-20 px-4 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center gap-3 mb-12">
+            <Briefcase className="w-8 h-8" />
+            <h2>Professional Experience</h2>
+          </div>
+          <div className="space-y-8">
+            {/* Meta - Business Engineer */}
+            <div className="timeline-item">
+              <div className="elevated-card p-8 rounded-2xl">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-white">Business Engineer</h3>
-                    <p className="text-gray-400">Meta</p>
+                    <h3 className="text-2xl font-bold mb-2">Business Engineer</h3>
+                    <p className="text-lg text-gray-600 font-medium">Meta</p>
                   </div>
-                  <div className="text-sm text-gray-400 mt-1 md:mt-0 md:text-right">
-                    <p>October 2024 – Present</p>
-                    <p className="flex items-center gap-1 md:justify-end"><MapPin className="w-3 h-3" /> London, UK</p>
+                  <div className="mt-2 md:mt-0 md:text-right">
+                    <p className="font-semibold">October 2024 – Present</p>
+                    <p className="text-sm text-gray-600 flex items-center gap-1 md:justify-end">
+                      <MapPin className="w-3 h-3" /> London, UK
+                    </p>
                   </div>
                 </div>
-                <ul className="space-y-2 text-gray-300 text-sm leading-relaxed">
-                  <li>• Owned and led end-to-end engineering projects within Meta's Dynamic Ads family of products</li>
-                  <li>• Collaborated with C-level stakeholders in DACH region on digital marketing strategy</li>
-                  <li>• Designed data-driven solutions leveraging data modeling and analytics</li>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Owned and led end-to-end engineering projects within Meta's Dynamic Ads family of products, delivering high-impact technical solutions</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Collaborated with C-level stakeholders in DACH region to identify and prioritize project requirements within digital marketing strategy</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Designed and implemented data-driven solutions leveraging data modeling and analytics</span>
+                  </li>
                 </ul>
               </div>
-              
-              {/* Meta - Solutions Architect Intern */}
-              <div className="border-l-4 border-gray-600 pl-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+            </div>
+
+            {/* Meta - Solutions Architect Intern */}
+            <div className="timeline-item">
+              <div className="elevated-card p-8 rounded-2xl">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-white">Solutions Architect Intern</h3>
-                    <p className="text-gray-400">Meta · Business Engineering</p>
+                    <h3 className="text-2xl font-bold mb-2">Solutions Architect Intern</h3>
+                    <p className="text-lg text-gray-600 font-medium">Meta · Business Engineering</p>
                   </div>
-                  <div className="text-sm text-gray-400 mt-1 md:mt-0 md:text-right">
-                    <p>July 2023 – June 2024</p>
-                    <p className="flex items-center gap-1 md:justify-end"><MapPin className="w-3 h-3" /> Buenos Aires, Argentina</p>
+                  <div className="mt-2 md:mt-0 md:text-right">
+                    <p className="font-semibold">July 2023 – June 2024</p>
+                    <p className="text-sm text-gray-600 flex items-center gap-1 md:justify-end">
+                      <MapPin className="w-3 h-3" /> Buenos Aires, Argentina
+                    </p>
                   </div>
                 </div>
-                <ul className="space-y-2 text-gray-300 text-sm leading-relaxed">
-                  <li>• Served as LATAM's point of contact for the BE Reels Program</li>
-                  <li>• Designed internal tools and dashboards for Go-To-Market strategies</li>
-                  <li>• Developed efficient data queries and streamlined data pipelines</li>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Served as LATAM's point of contact for the BE Reels Program</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Designed internal tools and dashboards for Go-To-Market strategies for new monetization products</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Developed efficient data queries and streamlined data pipelines for large-scale information traversal</span>
+                  </li>
                 </ul>
               </div>
-              
-              {/* ITBA - Instructor */}
-              <div className="border-l-4 border-gray-600 pl-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+            </div>
+
+            {/* ITBA - Instructor */}
+            <div className="timeline-item">
+              <div className="elevated-card p-8 rounded-2xl">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-white">Operating Systems Coursework Instructor</h3>
-                    <p className="text-gray-400">Instituto Tecnológico de Buenos Aires</p>
+                    <h3 className="text-2xl font-bold mb-2">Operating Systems Instructor</h3>
+                    <p className="text-lg text-gray-600 font-medium">Instituto Tecnológico de Buenos Aires</p>
                   </div>
-                  <div className="text-sm text-gray-400 mt-1 md:mt-0 md:text-right">
-                    <p>July 2024 – Present</p>
-                    <p className="flex items-center gap-1 md:justify-end"><MapPin className="w-3 h-3" /> Remote</p>
+                  <div className="mt-2 md:mt-0 md:text-right">
+                    <p className="font-semibold">July 2024 – Present</p>
+                    <p className="text-sm text-gray-600 flex items-center gap-1 md:justify-end">
+                      <MapPin className="w-3 h-3" /> Remote
+                    </p>
                   </div>
                 </div>
-                <ul className="space-y-2 text-gray-300 text-sm leading-relaxed">
-                  <li>• Lecture for full-time Software Engineering degree at one of Argentina's most prestigious universities</li>
-                  <li>• Teach and support 80+ students per semester on foundational systems concepts</li>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Lecture for full-time Software Engineering degree at one of Argentina's most prestigious universities</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <ChevronRight className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <span>Teach and support 80+ students per semester on foundational systems concepts</span>
+                  </li>
                 </ul>
               </div>
-              
             </div>
-          </section>
-          
-          {/* Skills Section */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-8 text-white">Skills</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {['C', 'Java', 'Python', 'HTML', 'Bash', 'AWS', 'Docker', 'Terraform', 'Git', 'Spring', 'Hibernate', 'React', 'Presto', 'PostgreSQL', 'Unity', 'TensorFlow'].map((skill) => (
-                <div key={skill} className="bg-[#1a1a1a] px-4 py-3 rounded text-center text-sm font-medium text-gray-300 hover:bg-[#252525] transition-colors">
-                  {skill}
-                </div>
-              ))}
-            </div>
-          </section>
-          
-          {/* Education Section */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-8 text-white">Education</h2>
-            <div className="space-y-6">
-              
-              <div className="bg-[#1a1a1a] p-6 rounded-lg border border-gray-700">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="text-lg font-bold text-white">Software Engineering Degree</h3>
-                    <p className="text-gray-400">Instituto Tecnológico de Buenos Aires</p>
-                  </div>
-                  <p className="text-sm text-gray-500">2019-2024</p>
-                </div>
-                <p className="text-sm text-[#dc2626] font-medium">Academic Performance: 87.9%</p>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* Skills Section */}
+      <section id="skills" className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center gap-3 mb-12">
+            <Code2 className="w-8 h-8" />
+            <h2>Technologies & Tools</h2>
+          </div>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {skills.map((skill, i) => (
+              <div key={skill} className={`skill-badge fade-in-up stagger-${(i % 5) + 1}`}>
+                {skill}
               </div>
-              
-              <div className="bg-[#1a1a1a] p-6 rounded-lg border border-gray-700">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="text-lg font-bold text-white">Master of Data Engineering & Analytics</h3>
-                    <p className="text-gray-400">Technische Universität München</p>
-                  </div>
-                  <p className="text-sm text-gray-500">2022-2023</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* Education Section */}
+      <section id="education" className="py-20 px-4 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center gap-3 mb-12">
+            <GraduationCap className="w-8 h-8" />
+            <h2>Education</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="elevated-card p-8 rounded-2xl hover-lift">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Software Engineering Degree</h3>
+                  <p className="text-gray-600 font-medium">Instituto Tecnológico de Buenos Aires</p>
                 </div>
-                <p className="text-sm text-gray-400">Exchange Student</p>
+                <p className="text-sm text-gray-500 font-medium">2019-2024</p>
               </div>
-              
+              <p className="text-sm font-semibold">Academic Performance: 87.9%</p>
             </div>
-          </section>
+            
+            <div className="elevated-card p-8 rounded-2xl hover-lift">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Data Engineering & Analytics</h3>
+                  <p className="text-gray-600 font-medium">Technische Universität München</p>
+                </div>
+                <p className="text-sm text-gray-500 font-medium">2022-2023</p>
+              </div>
+              <p className="text-sm text-gray-600">Exchange Student · Munich, Germany</p>
+            </div>
+          </div>
           
           {/* Achievements */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-8 text-white">Achievements</h2>
-            <div className="space-y-4">
-              <div className="bg-[#1a1a1a] p-5 rounded-lg border-l-4 border-[#dc2626]">
-                <h3 className="font-semibold text-white mb-1">Medal of Honour, Engineering</h3>
-                <p className="text-sm text-gray-400">Highest academic performance in Software Engineering cohort, class of 2024</p>
-              </div>
-              <div className="bg-[#1a1a1a] p-5 rounded-lg border-l-4 border-[#dc2626]">
-                <h3 className="font-semibold text-white mb-1">4x IGCSE Top Mark in Argentina</h3>
-                <p className="text-sm text-gray-400">Economics, ICT, French as a Foreign Language, and Overall ICE</p>
-              </div>
-              <div className="bg-[#1a1a1a] p-5 rounded-lg border-l-4 border-[#dc2626]">
-                <h3 className="font-semibold text-white mb-1">Cambridge English: Advanced (CAE)</h3>
-                <p className="text-sm text-gray-400">C2-level certificate in English</p>
-              </div>
+          <div className="mt-16">
+            <div className="flex items-center gap-3 mb-8">
+              <Award className="w-7 h-7" />
+              <h3 className="text-2xl font-bold">Achievements & Recognition</h3>
             </div>
-          </section>
-          
-          {/* University Projects */}
-          <section className="mb-20">
-            <h2 className="text-3xl font-bold mb-4 text-white">University Projects</h2>
-            <p className="text-gray-500 mb-8 text-sm">Academic projects from my Software Engineering degree at ITBA and exchange at TUM</p>
             <div className="grid md:grid-cols-2 gap-6">
-              
-              {[
-                {
-                  title: "Full-Stack Keras-based Classifier",
-                  desc: "End-to-end CNN system for cat/dog classification with containerized modules",
-                  tech: "FastAPI • Python • React • Keras • Docker"
-                },
-                {
-                  title: "P2P Cryptocurrency Marketplace",
-                  desc: "Fully-operational Buenos Aires-based marketplace for cryptocurrencies",
-                  tech: "Spring 4 • Java • PostgreSQL • Hibernate"
-                },
-                {
-                  title: "Socks5 Proxy From Scratch",
-                  desc: "RFC1928-compliant proxy with custom control protocol",
-                  tech: "C"
-                },
-                {
-                  title: "Markovia: Ecosystem Simulator",
-                  desc: "Food chain simulation with neural network-based decision making",
-                  tech: "Unity • C# • Blender"
-                },
-                {
-                  title: "JSON-to-XHTML Compiler",
-                  desc: "Modern JSON-based replacement for XSLT language",
-                  tech: "C • Bison • Flex"
-                },
-                {
-                  title: "Kernel From Scratch",
-                  desc: "Mini kernel with IPC mechanisms, memory management, and process switching",
-                  tech: "C • ASM"
-                }
-              ].map((project, i) => (
-                <Card key={i} className="bg-[#1a1a1a] border-gray-700 p-5 hover:border-gray-600 transition-colors">
-                  <h3 className="font-semibold text-white mb-2">{project.title}</h3>
-                  <p className="text-sm text-gray-400 mb-3">{project.desc}</p>
-                  <p className="text-xs text-gray-500">{project.tech}</p>
-                </Card>
-              ))}
-              
+              <div className="gradient-border p-6 rounded-xl">
+                <h4 className="font-semibold mb-2">Medal of Honour, Engineering</h4>
+                <p className="text-sm text-gray-600">Highest academic performance in Software Engineering cohort, class of 2024</p>
+              </div>
+              <div className="gradient-border p-6 rounded-xl">
+                <h4 className="font-semibold mb-2">4x IGCSE Top Mark in Argentina</h4>
+                <p className="text-sm text-gray-600">Economics, ICT, French as a Foreign Language, and Overall ICE</p>
+              </div>
+              <div className="gradient-border p-6 rounded-xl">
+                <h4 className="font-semibold mb-2">Cambridge English: Advanced (CAE)</h4>
+                <p className="text-sm text-gray-600">C2-level certificate in English</p>
+              </div>
+              <div className="gradient-border p-6 rounded-xl">
+                <h4 className="font-semibold mb-2">Multilingual Proficiency</h4>
+                <p className="text-sm text-gray-600">Spanish (Native), English (Proficient), French (Intermediate), German (Conversant)</p>
+              </div>
             </div>
-          </section>
-          
+          </div>
         </div>
-      </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="mb-12">
+            <h2 className="mb-4">University Projects</h2>
+            <p className="text-gray-600">Academic projects from my Software Engineering degree at ITBA and exchange at TUM</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, i) => (
+              <Card key={i} className={`elevated-card p-6 rounded-xl fade-in-up stagger-${(i % 5) + 1}`}>
+                <h3 className="text-lg font-semibold mb-3">{project.title}</h3>
+                <p className="text-sm text-gray-600 mb-4">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map(tech => (
+                    <span key={tech} className="text-xs px-2 py-1 bg-gray-100 rounded">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-4 bg-black text-white">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="mb-6 text-white">Let's Connect</h2>
+          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+            Interested in collaborating or discussing opportunities? I'd love to hear from you.
+          </p>
+          <div className="flex flex-wrap justify-center gap-8 mb-12 text-gray-300">
+            <a href="mailto:gonzabeade@gmail.com" className="flex items-center gap-2 hover:text-white transition-colors animated-underline">
+              <Mail className="w-5 h-5" />
+              <span>gonzabeade@gmail.com</span>
+            </a>
+            <a href="tel:+5491131006408" className="flex items-center gap-2 hover:text-white transition-colors animated-underline">
+              <Phone className="w-5 h-5" />
+              <span>+54 911 3100 6408</span>
+            </a>
+          </div>
+          <div className="flex justify-center gap-6">
+            <a href="https://github.com/gonzabeade" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-black transition-all">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="https://linkedin.com/in/gonzalo-beade" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-black transition-all">
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a href="mailto:gonzabeade@gmail.com" className="w-12 h-12 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-black transition-all">
+              <Mail className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 bg-black text-center text-gray-500 border-t border-white/10">
+        <p>© 2026 Gonzalo Manuel Beade. Crafted with precision and passion.</p>
+      </footer>
     </div>
   );
 }
