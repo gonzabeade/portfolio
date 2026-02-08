@@ -11,7 +11,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Briefcase, GraduationCap, Award, Code2, ChevronRight } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Briefcase, GraduationCap, Award, Code2, ChevronRight, ArrowRight, Plane } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
@@ -103,6 +103,7 @@ export default function Home() {
   ];
   
   const personalPhotos = [
+    { src: "/rowing.png", alt: "Rowing in London" },
     { src: "/cycling_event.webp", alt: "Cycling event" },
     { src: "/cycling_outdoor.webp", alt: "Outdoor cycling" },
     { src: "/tower_bridge.webp", alt: "Tower Bridge, London" },
@@ -153,27 +154,21 @@ export default function Home() {
                 Business Engineer @ Meta
               </Badge>
               {/* Floating Meta Logo */}
-              <div className="absolute -right-16 top-1/2 -translate-y-1/2 float-animation">
-                <svg className="w-12 h-12" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M256 128C256 198.692 198.692 256 128 256C57.308 256 0 198.692 0 128C0 57.308 57.308 0 128 0C198.692 0 256 57.308 256 128Z" fill="url(#paint0_linear)"/>
-                  <path d="M159.997 128.001L165.041 99.9155H138.001V81.0003C138.001 73.8283 141.551 66.8403 152.641 66.8403H166.001V42.5603C166.001 42.5603 155.721 40.8003 145.921 40.8003C125.361 40.8003 111.521 53.4403 111.521 77.7603V99.9155H86.9609V128.001H111.521V199.2H138.001V128.001H159.997Z" fill="white"/>
-                  <defs>
-                    <linearGradient id="paint0_linear" x1="128" y1="0" x2="128" y2="256" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#0081FB"/>
-                      <stop offset="1" stopColor="#0064E0"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
+              <div className="absolute -right-20 top-1/2 -translate-y-1/2 float-animation">
+                <img src="/meta-logo.svg" alt="Meta" className="w-16 h-16" />
+              </div>
+              {/* Floating ITBA Logo */}
+              <div className="absolute -left-20 top-1/2 -translate-y-1/2 float-animation" style={{animationDelay: '0.5s'}}>
+                <img src="/itba-logo.svg" alt="ITBA" className="w-16 h-16" />
               </div>
             </div>
             <h1 className="mb-6 fade-in-up stagger-1">
               Gonzalo Manuel Beade
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed fade-in-up stagger-2">
-              Software Engineer passionate about building scalable, high-impact solutions at the intersection of 
-              engineering and business. Experienced in full-stack development, data engineering, and technical leadership. 
-              Currently accelerating growth for Meta's Dynamic Ads products while teaching Operating Systems at 
-              one of Argentina's top universities.
+            <p className="text-lg md:text-xl text-gray-500 font-light mb-8 max-w-3xl mx-auto leading-relaxed fade-in-up stagger-2">
+              Keen teacher and passionate student who advocates for the openness of mathematical and technological 
+              education to whoever craves it. I am very eager to deepen my current technical knowledge and broaden 
+              my experiences in areas I may not have explored before.
             </p>
             <div className="flex flex-wrap justify-center gap-4 fade-in-up stagger-3">
               <Button size="lg" className="bg-black text-white hover:bg-gray-800 px-8" asChild>
@@ -279,14 +274,20 @@ export default function Home() {
             <Briefcase className="w-8 h-8" />
             <h2>Professional Experience</h2>
           </div>
-          <div className="space-y-8">
+          <div className="space-y-8 relative">
+            {/* Meta Career Path Connection */}
+            <div className="absolute left-8 top-24 bottom-[calc(100%-32rem)] w-0.5 bg-gradient-to-b from-blue-500 to-blue-600 hidden md:block"></div>
+            
             {/* Meta - Business Engineer */}
-            <div className="timeline-item">
-              <div className="elevated-card p-8 rounded-2xl">
+            <div className="timeline-item relative">
+              <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-600">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">Business Engineer</h3>
-                    <p className="text-lg text-gray-600 font-medium">Meta</p>
+                  <div className="flex items-start gap-4">
+                    <img src="/meta-logo.svg" alt="Meta" className="w-12 h-12 mt-1" />
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2">Business Engineer</h3>
+                      <p className="text-lg text-gray-600 font-medium">Meta</p>
+                    </div>
                   </div>
                   <div className="mt-2 md:mt-0 md:text-right">
                     <p className="font-semibold">October 2024 – Present</p>
@@ -310,15 +311,25 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
+              {/* Conversion Badge */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-10 hidden md:flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
+                <ArrowRight className="w-4 h-4" />
+                <span>Intern → FTE</span>
+                <Plane className="w-4 h-4" />
+                <span>ARG → UK</span>
+              </div>
             </div>
 
             {/* Meta - Solutions Architect Intern */}
-            <div className="timeline-item">
-              <div className="elevated-card p-8 rounded-2xl">
+            <div className="timeline-item relative">
+              <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-500">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">Solutions Architect Intern</h3>
-                    <p className="text-lg text-gray-600 font-medium">Meta · Business Engineering</p>
+                  <div className="flex items-start gap-4">
+                    <img src="/meta-logo.svg" alt="Meta" className="w-12 h-12 mt-1" />
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2">Solutions Architect Intern</h3>
+                      <p className="text-lg text-gray-600 font-medium">Meta · Business Engineering</p>
+                    </div>
                   </div>
                   <div className="mt-2 md:mt-0 md:text-right">
                     <p className="font-semibold">July 2023 – June 2024</p>
@@ -348,9 +359,12 @@ export default function Home() {
             <div className="timeline-item">
               <div className="elevated-card p-8 rounded-2xl">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">Operating Systems Instructor</h3>
-                    <p className="text-lg text-gray-600 font-medium">Instituto Tecnológico de Buenos Aires</p>
+                  <div className="flex items-start gap-4">
+                    <img src="/itba-logo.svg" alt="ITBA" className="w-12 h-12 mt-1" />
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2">Operating Systems Instructor</h3>
+                      <p className="text-lg text-gray-600 font-medium">Instituto Tecnológico de Buenos Aires</p>
+                    </div>
                   </div>
                   <div className="mt-2 md:mt-0 md:text-right">
                     <p className="font-semibold">July 2024 – Present</p>
@@ -490,20 +504,21 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, i) => (
-              <Card key={i} className={`elevated-card rounded-xl overflow-hidden fade-in-up stagger-${(i % 5) + 1}`}>
-                <div className="aspect-video w-full overflow-hidden bg-gray-100">
+              <Card key={i} className={`elevated-card rounded-xl overflow-hidden hover-lift fade-in-up stagger-${(i % 5) + 1}`}>
+                <div className="aspect-video w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 relative">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-300"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity"></div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-semibold mb-3">{project.title}</h3>
                   <p className="text-sm text-gray-600 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map(tech => (
-                      <span key={tech} className="text-xs px-2 py-1 bg-gray-100 rounded">
+                      <span key={tech} className="text-xs px-3 py-1 bg-gray-100 rounded-full font-medium hover:bg-gray-200 transition-colors">
                         {tech}
                       </span>
                     ))}
@@ -521,7 +536,7 @@ export default function Home() {
       <section id="gallery" className="py-20 px-4 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
           <h2 className="mb-12 text-center">Beyond Work</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {personalPhotos.map((photo, i) => (
               <div key={i} className={`aspect-square overflow-hidden rounded-xl elevated-card fade-in-up stagger-${(i % 5) + 1}`}>
                 <img 
