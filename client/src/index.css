@@ -368,6 +368,26 @@
   section {
     scroll-margin-top: 80px;
   }
+  
+  /* Complex Floating Tech Logos Animation */
+  .tech-logo-float {
+    animation: complexFloat 15s ease-in-out infinite;
+  }
+  
+  @keyframes complexFloat {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    25% {
+      transform: translate(30px, -40px) rotate(5deg) scale(1.1);
+    }
+    50% {
+      transform: translate(-20px, -80px) rotate(-3deg) scale(0.9);
+    }
+    75% {
+      transform: translate(40px, -50px) rotate(7deg) scale(1.05);
+    }
+  }
 }
 
 @layer utilities {

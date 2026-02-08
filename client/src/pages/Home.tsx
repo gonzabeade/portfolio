@@ -1,6 +1,7 @@
 /* Black & White Elegant - Modern Sophisticated Portfolio
    Demonstrating frontend mastery through:
    - Advanced layout techniques
+   - Complex floating animations for tech logos
    - Smooth animations and micro-interactions
    - Perfect typography and spacing
    - Modern CSS effects (glassmorphism, gradients, transforms)
@@ -11,11 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink, Briefcase, GraduationCap, Award, Code2, ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [showFloatingLogos, setShowFloatingLogos] = useState(false);
+  const skillsSectionRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +32,14 @@ export default function Home() {
           setActiveSection(section.id);
         }
       });
+      
+      // Trigger floating logos when skills section is in view
+      if (skillsSectionRef.current) {
+        const rect = skillsSectionRef.current.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.7 && rect.bottom >= 0) {
+          setShowFloatingLogos(true);
+        }
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -36,42 +47,67 @@ export default function Home() {
   }, []);
 
   const skills = [
-    'C', 'Java', 'Python', 'HTML/CSS', 'JavaScript', 'Bash',
-    'AWS', 'Docker', 'Terraform', 'Git', 'Spring Framework',
-    'Hibernate', 'React', 'Presto', 'PostgreSQL', 'Unity', 'TensorFlow'
+    { name: 'C', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg' },
+    { name: 'Java', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+    { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+    { name: 'JavaScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+    { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+    { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+    { name: 'AWS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg' },
+    { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+    { name: 'Terraform', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg' },
+    { name: 'Git', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+    { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+    { name: 'TensorFlow', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+    { name: 'Langchain', logo: 'https://api.iconify.design/simple-icons:langchain.svg' },
+    { name: 'MCP', logo: 'https://api.iconify.design/mdi:protocol.svg' },
   ];
   
   const projects = [
     {
       title: "Full-Stack Keras Classifier",
       description: "End-to-end CNN system for image classification with containerized architecture",
-      tech: ["FastAPI", "Python", "React", "Keras", "Docker"]
+      tech: ["FastAPI", "Python", "React", "Keras", "Docker"],
+      image: "/project-ai.png"
     },
     {
       title: "P2P Cryptocurrency Marketplace",
       description: "Fully-operational Buenos Aires-based marketplace with custom backend and frontend",
-      tech: ["Spring 4", "Java", "PostgreSQL", "Hibernate"]
+      tech: ["Spring 4", "Java", "PostgreSQL", "Hibernate"],
+      image: "/project-cryptuki.png"
     },
     {
       title: "Socks5 Proxy From Scratch",
       description: "RFC1928-compliant proxy with custom control protocol for statistics",
-      tech: ["C", "Networking"]
+      tech: ["C", "Networking"],
+      image: "/project-socks5.png"
     },
     {
       title: "Markovia: Ecosystem Simulator",
       description: "Food chain simulation with neural network-based decision making",
-      tech: ["Unity", "C#", "ML", "Blender"]
+      tech: ["Unity", "C#", "ML", "Blender"],
+      image: "/project-markovia.png"
     },
     {
       title: "JSON-to-XHTML Compiler",
       description: "Modern JSON-based compiler as XSLT replacement",
-      tech: ["C", "Bison", "Flex"]
+      tech: ["C", "Bison", "Flex"],
+      image: "/project-compiler.png"
     },
     {
       title: "Kernel From Scratch",
       description: "Mini kernel with IPC, memory management, and process switching",
-      tech: ["C", "Assembly"]
+      tech: ["C", "Assembly"],
+      image: "/project-kernel.png"
     }
+  ];
+  
+  const personalPhotos = [
+    { src: "/cycling_event.webp", alt: "Cycling event" },
+    { src: "/cycling_outdoor.webp", alt: "Outdoor cycling" },
+    { src: "/tower_bridge.webp", alt: "Tower Bridge, London" },
+    { src: "/snow_mountain.webp", alt: "Mountain hiking" },
+    { src: "/graffiti_dog.webp", alt: "Street art" },
   ];
 
   return (
@@ -85,7 +121,7 @@ export default function Home() {
             GB
           </a>
           <div className="hidden md:flex items-center gap-8">
-            {['About', 'Experience', 'Skills', 'Education', 'Projects', 'Contact'].map((item) => (
+            {['About', 'Experience', 'Skills', 'Education', 'Projects', 'Gallery', 'Contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -112,26 +148,45 @@ export default function Home() {
       <section id="hero" className="min-h-screen flex items-center justify-center pt-20 px-4">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-6 fade-in-up">
-              <Badge className="bg-black text-white px-4 py-2 text-sm font-medium">
+            <div className="mb-6 fade-in-up relative inline-block">
+              <Badge className="bg-black text-white px-4 py-2 text-sm font-medium relative z-10">
                 Business Engineer @ Meta
               </Badge>
+              {/* Floating Meta Logo */}
+              <div className="absolute -right-16 top-1/2 -translate-y-1/2 float-animation">
+                <svg className="w-12 h-12" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M256 128C256 198.692 198.692 256 128 256C57.308 256 0 198.692 0 128C0 57.308 57.308 0 128 0C198.692 0 256 57.308 256 128Z" fill="url(#paint0_linear)"/>
+                  <path d="M159.997 128.001L165.041 99.9155H138.001V81.0003C138.001 73.8283 141.551 66.8403 152.641 66.8403H166.001V42.5603C166.001 42.5603 155.721 40.8003 145.921 40.8003C125.361 40.8003 111.521 53.4403 111.521 77.7603V99.9155H86.9609V128.001H111.521V199.2H138.001V128.001H159.997Z" fill="white"/>
+                  <defs>
+                    <linearGradient id="paint0_linear" x1="128" y1="0" x2="128" y2="256" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#0081FB"/>
+                      <stop offset="1" stopColor="#0064E0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
             </div>
             <h1 className="mb-6 fade-in-up stagger-1">
               Gonzalo Manuel Beade
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed fade-in-up stagger-2">
-              Building and scaling technical solutions at the intersection of engineering and business. 
-              Currently accelerating growth for Meta's Dynamic Ads products in London.
+              Software Engineer passionate about building scalable, high-impact solutions at the intersection of 
+              engineering and business. Experienced in full-stack development, data engineering, and technical leadership. 
+              Currently accelerating growth for Meta's Dynamic Ads products while teaching Operating Systems at 
+              one of Argentina's top universities.
             </p>
             <div className="flex flex-wrap justify-center gap-4 fade-in-up stagger-3">
-              <Button size="lg" className="bg-black text-white hover:bg-gray-800 px-8">
-                <Mail className="w-4 h-4 mr-2" />
-                Get in Touch
+              <Button size="lg" className="bg-black text-white hover:bg-gray-800 px-8" asChild>
+                <a href="mailto:gonzabeade@gmail.com">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Get in Touch
+                </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-white px-8">
-                <Download className="w-4 h-4 mr-2" />
-                Download CV
+              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-white px-8" asChild>
+                <a href="/Gonzalo_Beade_CV.pdf" download="Gonzalo_Beade_CV.pdf">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download CV
+                </a>
               </Button>
             </div>
             <div className="mt-12 flex justify-center gap-8 text-sm text-gray-600 fade-in-up stagger-4">
@@ -150,15 +205,15 @@ export default function Home() {
 
       <div className="section-divider"></div>
 
-      {/* About Section */}
+      {/* About Section with Profile Photo */}
       <section id="about" className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-12">
             <Briefcase className="w-8 h-8" />
             <h2>About Me</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 text-gray-700 leading-relaxed">
+          <div className="grid md:grid-cols-3 gap-12 items-start">
+            <div className="md:col-span-2 space-y-6 text-gray-700 leading-relaxed">
               <p className="text-lg">
                 I'm a <span className="font-semibold text-black">Business Engineer at Meta</span>, where I build and scale 
                 technical solutions that accelerate business growth for partners. My role sits at the unique intersection 
@@ -174,36 +229,41 @@ export default function Home() {
                 de Buenos Aires, where I guide over 80 students each semester through foundational systems concepts.
               </p>
             </div>
-            <div className="glass-card p-8 rounded-2xl">
-              <h3 className="text-xl font-semibold mb-6">What is Business Engineering?</h3>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
-                    1
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Business Understanding</h4>
-                    <p className="text-sm text-gray-600">Deep comprehension of partner needs and market dynamics</p>
-                  </div>
+            <div className="flex justify-center md:justify-end">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-600 rounded-2xl blur-xl opacity-20"></div>
+                <img 
+                  src="/profile.png" 
+                  alt="Gonzalo Beade" 
+                  className="relative w-64 h-64 object-cover rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-12 glass-card p-8 rounded-2xl">
+            <h3 className="text-xl font-semibold mb-6">What is Business Engineering?</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+                  1
                 </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
-                    2
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Engineering Excellence</h4>
-                    <p className="text-sm text-gray-600">World-class software engineering and technical expertise</p>
-                  </div>
+                <h4 className="font-semibold mb-2">Business Understanding</h4>
+                <p className="text-sm text-gray-600">Deep comprehension of partner needs and market dynamics</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+                  2
                 </div>
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center font-bold text-sm">
-                    3
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Entrepreneurial Mindset</h4>
-                    <p className="text-sm text-gray-600">Proactive problem-solving and growth-focused innovation</p>
-                  </div>
+                <h4 className="font-semibold mb-2">Engineering Excellence</h4>
+                <p className="text-sm text-gray-600">World-class software engineering and technical expertise</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+                  3
                 </div>
+                <h4 className="font-semibold mb-2">Entrepreneurial Mindset</h4>
+                <p className="text-sm text-gray-600">Proactive problem-solving and growth-focused innovation</p>
               </div>
             </div>
           </div>
@@ -317,21 +377,45 @@ export default function Home() {
 
       <div className="section-divider"></div>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+      {/* Skills Section with Floating Logos */}
+      <section ref={skillsSectionRef} id="skills" className="py-20 px-4 relative overflow-hidden min-h-[600px]">
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="flex items-center gap-3 mb-12">
             <Code2 className="w-8 h-8" />
             <h2>Technologies & Tools</h2>
           </div>
-          <div className="flex flex-wrap gap-3 justify-center">
+          <div className="flex flex-wrap gap-3 justify-center relative z-10">
             {skills.map((skill, i) => (
-              <div key={skill} className={`skill-badge fade-in-up stagger-${(i % 5) + 1}`}>
-                {skill}
+              <div key={skill.name} className={`skill-badge fade-in-up stagger-${(i % 5) + 1}`}>
+                {skill.name}
               </div>
             ))}
           </div>
         </div>
+        
+        {/* Floating Tech Logos Background */}
+        {showFloatingLogos && (
+          <div className="absolute inset-0 pointer-events-none">
+            {skills.map((skill, i) => (
+              <div
+                key={`float-${skill.name}`}
+                className="absolute tech-logo-float"
+                style={{
+                  left: `${(i * 17 + 10) % 90}%`,
+                  top: `${(i * 23 + 15) % 80}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: `${15 + (i % 5) * 2}s`,
+                }}
+              >
+                <img 
+                  src={skill.logo} 
+                  alt={skill.name}
+                  className="w-16 h-16 opacity-10 hover:opacity-30 transition-opacity"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <div className="section-divider"></div>
@@ -406,17 +490,46 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, i) => (
-              <Card key={i} className={`elevated-card p-6 rounded-xl fade-in-up stagger-${(i % 5) + 1}`}>
-                <h3 className="text-lg font-semibold mb-3">{project.title}</h3>
-                <p className="text-sm text-gray-600 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(tech => (
-                    <span key={tech} className="text-xs px-2 py-1 bg-gray-100 rounded">
-                      {tech}
-                    </span>
-                  ))}
+              <Card key={i} className={`elevated-card rounded-xl overflow-hidden fade-in-up stagger-${(i % 5) + 1}`}>
+                <div className="aspect-video w-full overflow-hidden bg-gray-100">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold mb-3">{project.title}</h3>
+                  <p className="text-sm text-gray-600 mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map(tech => (
+                      <span key={tech} className="text-xs px-2 py-1 bg-gray-100 rounded">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider"></div>
+
+      {/* Photo Gallery */}
+      <section id="gallery" className="py-20 px-4 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="mb-12 text-center">Beyond Work</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {personalPhotos.map((photo, i) => (
+              <div key={i} className={`aspect-square overflow-hidden rounded-xl elevated-card fade-in-up stagger-${(i % 5) + 1}`}>
+                <img 
+                  src={photo.src} 
+                  alt={photo.alt}
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -457,7 +570,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-8 bg-black text-center text-gray-500 border-t border-white/10">
-        <p>© 2026 Gonzalo Manuel Beade. Crafted with precision and passion.</p>
+        <p>© 2026 Gonzalo Manuel Beade</p>
       </footer>
     </div>
   );
