@@ -155,11 +155,11 @@ export default function Home() {
               </Badge>
               {/* Floating Meta Logo */}
               <div className="absolute -right-20 top-1/2 -translate-y-1/2 float-animation">
-                <img src="/meta-logo.svg" alt="Meta" className="w-16 h-16" />
+                <img src="/meta-logo.png" alt="Meta" className="w-16 h-16 object-contain" />
               </div>
               {/* Floating ITBA Logo */}
               <div className="absolute -left-20 top-1/2 -translate-y-1/2 float-animation" style={{animationDelay: '0.5s'}}>
-                <img src="/itba-logo.svg" alt="ITBA" className="w-16 h-16" />
+                <img src="/itba-logo.png" alt="ITBA" className="w-16 h-16 object-contain" />
               </div>
             </div>
             <h1 className="mb-6 fade-in-up stagger-1">
@@ -283,7 +283,7 @@ export default function Home() {
               <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-600">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex items-start gap-4">
-                    <img src="/meta-logo.svg" alt="Meta" className="w-12 h-12 mt-1" />
+                    <img src="/meta-logo.png" alt="Meta" className="w-12 h-12 mt-1 object-contain" />
                     <div>
                       <h3 className="text-2xl font-bold mb-2">Business Engineer</h3>
                       <p className="text-lg text-gray-600 font-medium">Meta</p>
@@ -325,7 +325,7 @@ export default function Home() {
               <div className="elevated-card p-8 rounded-2xl border-l-4 border-blue-500">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex items-start gap-4">
-                    <img src="/meta-logo.svg" alt="Meta" className="w-12 h-12 mt-1" />
+                    <img src="/meta-logo.png" alt="Meta" className="w-12 h-12 mt-1 object-contain" />
                     <div>
                       <h3 className="text-2xl font-bold mb-2">Solutions Architect Intern</h3>
                       <p className="text-lg text-gray-600 font-medium">Meta · Business Engineering</p>
@@ -360,7 +360,7 @@ export default function Home() {
               <div className="elevated-card p-8 rounded-2xl">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <div className="flex items-start gap-4">
-                    <img src="/itba-logo.svg" alt="ITBA" className="w-12 h-12 mt-1" />
+                    <img src="/itba-logo.png" alt="ITBA" className="w-12 h-12 mt-1 object-contain" />
                     <div>
                       <h3 className="text-2xl font-bold mb-2">Operating Systems Instructor</h3>
                       <p className="text-lg text-gray-600 font-medium">Instituto Tecnológico de Buenos Aires</p>
